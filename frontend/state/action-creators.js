@@ -44,7 +44,7 @@ export function fetchQuiz() {
     axios
       .get(`${URL}next`)
       .then((resp) => {
-        console.log("get resp", resp.data);
+        // console.log("get resp", resp.data);
         dispatch({ type: actions.SET_QUIZ_INTO_STATE, payload: null });
         dispatch({ type: actions.SET_QUIZ_INTO_STATE, payload: resp.data });
       })

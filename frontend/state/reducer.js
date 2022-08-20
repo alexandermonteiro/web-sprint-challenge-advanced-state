@@ -26,17 +26,6 @@ function quiz(state = initialQuizState, action) {
     default:
       return state;
   }
-
-  //   case types.SET_QUIZ_INTO_STATE:
-  //     if (action.payload) {
-  //       return { ...state, state: action.payload };
-  //     } else {
-  //       return initialQuizState;
-  //     }
-
-  //   default:
-  //     return state;
-  // }
 }
 
 const initialSelectedAnswerState = null;
