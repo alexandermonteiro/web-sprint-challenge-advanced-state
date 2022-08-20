@@ -18,8 +18,8 @@ export function selectAnswer(answerId) {
 }
 
 // form
-export function setMessage(value) {
-  return { type: actions.SET_INFO_MESSAGE, payload: value };
+export function setMessage(name) {
+  return { type: actions.SET_INFO_MESSAGE, payload: name };
 }
 
 // quizz
@@ -56,11 +56,11 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   };
 }
-export function postAnswer(id, quizId) {
+export function postAnswer(answer_id, quiz_id) {
   return function (dispatch) {
     // On successful POST:
     axios
-      .post(`${URL}answer`, { quiz_id: quizId, answer_id: id })
+      .post(`${URL}answer`, { quiz_id, answer_id })
       .then((res) => {
         dispatch({ type: actions.SET_SELECTED_ANSWER, payload: null });
         dispatch({ type: actions.SET_INFO_MESSAGE, payload: res.data.message });
@@ -72,11 +72,53 @@ export function postAnswer(id, quizId) {
     // - Dispatch the fetching of the next quiz
   };
 }
-export function postQuiz() {
+export function postQuiz(news, trues, falses) {
   return function (dispatch) {
+    axios
+      .post(`${URL}new`, {
+        question_text: news,
+        true_answer_text: trues,
+        false_answer_text: falses,
+      })
+      .then((resp) => {
+        console.log("post quiz res", resp.data);
+        // dispatch(setMessage(` You got a correct answer: ${resp.data.message}`));
+        // dispatch(resetForm());
+        dispatch({
+          type: actions.SET_QUIZ_INTO_STATE,
+          payload: resp.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log("post quiz err", err);
+      });
+
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
   };
 }
+
+// export function postQuiz(news, trues, falses) {
+//   return function (dispatch) {
+//     // On successful POST:
+//     // - Dispatch the correct message to the the appropriate state
+//     axios
+//       .post(`${URL}new`, {
+//         question_text: news,
+//         true_answer_text: trues,
+//         false_answer_text: falses,
+//       })
+//       .then((res) => {
+//         console.log("res", res.data.news);
+//         dispatch({ type: actions.SET_QUIZ_INTO_STATE, payload: res.data.data });
+//         // dispatch(
+//         //   setMessage(` Congrats: ${res.data.news} is a great question!`)
+//         // );
+//       })
+//       .catch((err) => console.log(err));
+//     // - Dispatch the resetting of the form
+//   };
+// }
+
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
