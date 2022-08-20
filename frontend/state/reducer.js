@@ -17,18 +17,43 @@ function wheel(state = initialWheelState, action) {
   }
 }
 
-const initialQuizState = null;
+const initialQuizState = [];
 function quiz(state = initialQuizState, action) {
-  return state;
+  switch (action.type) {
+    case types.SET_QUIZ_INTO_STATE: {
+      return { ...state, state: action.payload };
+    }
+    default:
+      return state;
+  }
+
+  //   case types.SET_QUIZ_INTO_STATE:
+  //     if (action.payload) {
+  //       return { ...state, state: action.payload };
+  //     } else {
+  //       return initialQuizState;
+  //     }
+
+  //   default:
+  //     return state;
+  // }
 }
 
 const initialSelectedAnswerState = null;
 function selectedAnswer(state = initialSelectedAnswerState, action) {
+  switch (action.type) {
+    case types.SET_SELECTED_ANSWER:
+      return action.payload;
+  }
   return state;
 }
 
 const initialMessageState = "";
 function infoMessage(state = initialMessageState, action) {
+  switch (action.type) {
+    case types.SET_INFO_MESSAGE:
+      return action.payload;
+  }
   return state;
 }
 
